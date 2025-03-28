@@ -5,7 +5,7 @@ class Database {
 
     private function __construct() {
         try {
-            $this->conn = new SQLite3(__DIR__ . '/../database/shop.db');
+            $this->conn = new SQLite3('/var/www/html/database/shop.db');
         } catch(Exception $e) {
             echo "Connection failed: " . $e->getMessage();
         }

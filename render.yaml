@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: php-shop
+    env: docker
+    buildCommand: docker build -t php-shop .
+    startCommand: docker run -p $PORT:80 php-shop
