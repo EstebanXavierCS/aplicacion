@@ -5,9 +5,25 @@ class Database {
 
     private function __construct() {
         try {
-            $this->conn = new SQLite3('/var/www/html/database/shop.db');
+            $dbPath = __DIR__ . '/../database/shop.db';
+            $dbDir = dirname($dbPath);
+            
+            // Create database directory if it doesn't exist
+            if (!is_dir($dbDir)) {
+                mkdir($dbDir, 0777, true);
+            }
+            
+            // Create database file if it doesn't exist
+            if (!file_exists($dbPath)) {
+                touch($dbPath);
+                chmod($dbPath, 0777);
+            }
+            
+            $this->conn = new SQLite3($dbPath);
+            $this->conn->exec('PRAGMA foreign_keys = ON;');
+            
         } catch(Exception $e) {
-            echo "Connection failed: " . $e->getMessage();
+            die("Database connection failed: " . $e->getMessage());
         }
     }
 
